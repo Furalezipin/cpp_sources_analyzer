@@ -12,23 +12,38 @@ CommandLineParser::CommandLineParser() {
 
 }
 
+const std::string& CommandLineParser::getSourceFolder() {
+    return m_sourceFolder;
+}
+
+const std::vector<std::string>& CommandLineParser::getListIncudeDirs() {
+    return m_listIncludeDirs;
+}
+
 ParseResult CommandLineParser::parseArguments(int argc, char **argv) {
-    std::string input;
     options_description desc("Available options");
     desc.add_options()
             ("help", "Print usage")
-            ("input,i", value(&input), "Include directories");
+            ("input,i", value<std::vector<std::string>>(&m_listIncludeDirs)->multitoken(), "Include directories")
+            ("sources_directory", value<std::string>(&m_sourceFolder), "Directory with source files");
 
     positional_options_description positionals;
-    positionals.add("Source directory", 1 );
+    positionals.add("sources_directory", 1);
 
     variables_map vm;
-    store(command_line_parser (argc, argv)
-               .positional(positionals)
-               .options(desc).run (), vm);
-    notify (vm);
+    try {
+        store(command_line_parser(argc, argv)
+            .options(desc)
+            .positional(positionals)
+            .run(), vm);
+        notify(vm);
+    } catch (error& e) {
+        std::cout << "ERROR: " << e.what() << "\n";
+        std::cout << desc << "\n";
+        return ParseResult::Result_Error;
+    }
 
-    if (vm.count ("help") || !vm.count ("value")) {
+    if (vm.count ("help") || !vm.count ("input")) {
         std::cerr << desc << "\n";
     }
 

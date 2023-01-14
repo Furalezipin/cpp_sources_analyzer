@@ -5,13 +5,14 @@
 int main(int argc, char **argv) {
 
     CommandLineParser parser;
-    switch (parser.parseArguments(argc, argv)) {
-    case ParseResult::Result_Ok:
-        break;
-    case ParseResult::Result_Error:
-        break;
-    default:
-        break;
+    if (parser.parseArguments(argc, argv) != ParseResult::Result_Error) {
+
+        auto& sourceFolder = parser.getSourceFolder();
+        auto& listIncudeDirs = parser.getListIncudeDirs();
+
+        std::cout << sourceFolder << "\n";
+        std::cout << listIncudeDirs.size() << "\n";
+
     }
 
     return 0;
