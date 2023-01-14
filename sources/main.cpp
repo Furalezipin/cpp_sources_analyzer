@@ -1,10 +1,18 @@
 #include <iostream>
 
-#include <boost/program_options/options_description.hpp>
+#include "commandlineparser.h"
 
-using namespace boost::program_options;
+int main(int argc, char **argv) {
 
-int main() {
-    options_description desc("General options");
-    std::cout << "Hello world" << std::endl;
+    CommandLineParser parser;
+    switch (parser.parseArguments(argc, argv)) {
+    case ParseResult::Result_Ok:
+        break;
+    case ParseResult::Result_Error:
+        break;
+    default:
+        break;
+    }
+
+    return 0;
 }
