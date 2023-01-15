@@ -1,6 +1,7 @@
 #ifndef COMMANDLINEPARSER_H
 #define COMMANDLINEPARSER_H
 
+#include <list>
 #include <vector>
 #include <string>
 
@@ -14,7 +15,7 @@ class CommandLineParser
 public:
     CommandLineParser();
     const std::string& getSourceFolder();
-    const std::vector<std::string>& getListIncudeDirs();
+    const std::list<std::string>& getListIncudeDirs();
     ParseResult parseArguments(int argc, char **argv);
 private:
     std::string m_sourceFolder;

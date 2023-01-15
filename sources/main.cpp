@@ -2,6 +2,7 @@
 
 #include "commandlineparser.h"
 #include "fileutils.h"
+#include "include_guard/includeguard.h"
 
 int main(int argc, char **argv) {
 
@@ -14,10 +15,15 @@ int main(int argc, char **argv) {
         std::cout << sourceFolder << "\n";
         std::cout << listIncudeDirs.size() << "\n";
 
-        auto listSourceFiles = FileUtils::getListSourceFilesFromFolder(sourceFolder);
-        for (auto file : listSourceFiles) {
+        auto listSourceFiles = std::move(FileUtils::getListSourceFilesFromFolder(sourceFolder));
+        for (auto& file : listSourceFiles) {
             std::cout << file << "\n";
         }
+
+        IncludeGuard guard;
+        guard.setSourceFiles(listSourceFiles);
+        guard.createIncludeGraph();
+        guard.printIncludeGraph();
 
     }
 
