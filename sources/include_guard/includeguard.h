@@ -4,6 +4,8 @@
 #include <list>
 #include <string>
 
+#include "sourcefile.h"
+
 class IncludeGuard {
 public:
 	IncludeGuard();
@@ -16,6 +18,8 @@ public:
 	void printIncludeGraph();
 
 private:
+	std::list<SourceFile> m_sourceFiles;
+	void parseSourceFiles(const std::list<std::string>& sourceFiles);
 
 };
 

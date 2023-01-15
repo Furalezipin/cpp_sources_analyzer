@@ -11,14 +11,7 @@ int main(int argc, char **argv) {
 
         auto& sourceFolder = parser.getSourceFolder();
         auto& listIncudeDirs = parser.getListIncudeDirs();
-
-        std::cout << sourceFolder << "\n";
-        std::cout << listIncudeDirs.size() << "\n";
-
-        auto listSourceFiles = std::move(FileUtils::getListSourceFilesFromFolder(sourceFolder));
-        for (auto& file : listSourceFiles) {
-            std::cout << file << "\n";
-        }
+        auto listSourceFiles = FileUtils::getListSourceFilesFromFolder(sourceFolder);
 
         IncludeGuard guard;
         guard.setSourceFiles(listSourceFiles);
