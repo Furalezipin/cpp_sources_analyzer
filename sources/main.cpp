@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
     if (parser.parseArguments(argc, argv) != ParseResult::Result_Error) {
 
         auto& sourceFolder = parser.getSourceFolder();
-        auto& listIncudeDirs = parser.getListIncudeDirs();
+        auto listIncudeDirs = parser.getListIncudeDirs();
         auto listSourceFiles = FileUtils::getListSourceFilesFromFolder(sourceFolder);
 
         IncludeGuard guard;

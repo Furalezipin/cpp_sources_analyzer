@@ -15,7 +15,7 @@ class CommandLineParser
 public:
     CommandLineParser();
     const std::string& getSourceFolder();
-    const std::list<std::string>& getListIncudeDirs();
+    const std::list<std::string> getListIncudeDirs();
     ParseResult parseArguments(int argc, char **argv);
 private:
     std::string m_sourceFolder;

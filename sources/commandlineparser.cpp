@@ -16,7 +16,7 @@ const std::string& CommandLineParser::getSourceFolder() {
     return m_sourceFolder;
 }
 
-const std::list<std::string>& CommandLineParser::getListIncudeDirs() {
+const std::list<std::string> CommandLineParser::getListIncudeDirs() {
     return std::list(m_listIncludeDirs.begin(), m_listIncludeDirs.end());
 }
 
