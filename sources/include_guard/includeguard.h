@@ -9,7 +9,8 @@
 class IncludeGuard {
 public:
 	IncludeGuard();
-	IncludeGuard(const std::list<std::string>& sourceFiles, const std::list<std::string>& includeDirs);
+        IncludeGuard(const std::list<std::string>& sourceFiles, const std::list<std::string>& includeDirs,
+                     const std::string& self_dir);
 
 	void setIncludeDirs(const std::list<std::string>& includeDirs);
 	void setSourceFiles(const std::list<std::string>& sourceFiles);
@@ -19,6 +20,8 @@ public:
 
 private:
 	std::list<SourceFile> m_sourceFiles;
+        std::list<std::string> m_includeDir;
+        std::string m_selfDir;
 	void parseSourceFiles(const std::list<std::string>& sourceFiles);
 
 };
