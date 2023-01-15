@@ -3,13 +3,14 @@
 IncludeGuard::IncludeGuard() {
 }
 
-IncludeGuard::IncludeGuard(const std::list<std::string>& sourceFiles, const std::list<std::string>& includeDirs, const std::string &self_dir) :
-    m_selfDir(self_dir)
+IncludeGuard::IncludeGuard(const std::list<std::string>& sourceFiles, std::list<std::string> &&includeDirs, const std::string &self_dir) :
+    m_selfDir(self_dir), m_includeDir(std::forward<std::list<std::string>>(includeDirs))
 {
 	parseSourceFiles(sourceFiles);
 }
 
-void IncludeGuard::setIncludeDirs(const std::list<std::string>& includeDirs) {
+void IncludeGuard::setIncludeDirs(std::list<std::string>&& includeDirs) {
+    m_includeDir = std::forward<std::list<std::string>>(includeDirs);
 }
 
 void IncludeGuard::setSourceFiles(const std::list<std::string>& sourceFiles) {

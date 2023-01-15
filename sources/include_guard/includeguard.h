@@ -9,10 +9,10 @@
 class IncludeGuard {
 public:
 	IncludeGuard();
-        IncludeGuard(const std::list<std::string>& sourceFiles, const std::list<std::string>& includeDirs,
+        IncludeGuard(const std::list<std::string>& sourceFiles, std::list<std::string>&& includeDirs,
                      const std::string& self_dir);
 
-	void setIncludeDirs(const std::list<std::string>& includeDirs);
+        void setIncludeDirs(std::list<std::string> &&includeDirs);
 	void setSourceFiles(const std::list<std::string>& sourceFiles);
 
 	void createIncludeGraph();
