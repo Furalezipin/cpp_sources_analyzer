@@ -18,8 +18,11 @@ private:
 	std::string m_path;
 	std::string m_fileName;
 
+	bool m_isParsed;
 	std::list<std::string> m_listLocalIncludes;
 	std::list<std::string> m_listGlobalIncludes;
+
+	void parse();
 
 };
 

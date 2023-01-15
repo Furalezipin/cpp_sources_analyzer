@@ -13,19 +13,38 @@ constexpr auto MULTIROW_COMMENTARY_END = "*/";
 using namespace boost::algorithm;
 
 SourceFile::SourceFile(const std::string& path) :
-    m_path(path)
+    m_path(path), m_fileName(FileUtils::getFileName(path)), m_isParsed(false)
 {
-	
-    m_fileName = FileUtils::getFileName(path);
+}
+
+const std::list<std::string>& SourceFile::getGlobalIncludes() {
+    if (!m_isParsed) parse();
+	return m_listGlobalIncludes;
+}
+
+const std::list<std::string>& SourceFile::getLocalIncludes() {
+    if (!m_isParsed) parse();
+    return m_listLocalIncludes;
+}
+
+const std::string& SourceFile::getFileName() {
+    return m_fileName;
+}
+
+const std::string& SourceFile::getFilePath() {
+    return m_path;
+}
+
+void SourceFile::parse() {
 
     std::string line;
-    std::ifstream in(path);
+    std::ifstream in(m_path);
 
-    if (in.is_open()) {   
+    if (in.is_open()) {
         bool inCommentaryBlock = false;
 
         while (getline(in, line))
-        {   
+        {
             trim(line);
 
             if (starts_with(line, MULTIROW_COMMENTARY_BEGIN)) inCommentaryBlock = true;
@@ -49,25 +68,9 @@ SourceFile::SourceFile(const std::string& path) :
         }
     }
     else {
-        std::cerr << "Cannot open file " << path << "\n";
+        std::cerr << "Cannot open file " << m_path << "\n";
     }
     in.close();
-
-}
-
-const std::list<std::string>& SourceFile::getGlobalIncludes() {
-	return m_listGlobalIncludes;
-}
-
-const std::list<std::string>& SourceFile::getLocalIncludes() {
-	return m_listLocalIncludes;
-}
-
-const std::string& SourceFile::getFileName() {
-    return m_fileName;
-}
-
-const std::string& SourceFile::getFilePath() {
-    return m_path;
+    m_isParsed = true;
 }
 

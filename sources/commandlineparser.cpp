@@ -43,7 +43,7 @@ ParseResult CommandLineParser::parseArguments(int argc, char **argv) {
         return ParseResult::Result_Error;
     }
 
-    if (vm.count ("help") || !vm.count ("input")) {
+    if (vm.count ("help")) {
         std::cerr << desc << "\n";
     }
 
