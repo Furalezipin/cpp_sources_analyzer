@@ -7,6 +7,7 @@
 class FileUtils {
 public:
 	static std::list<std::string> getListSourceFilesFromFolder(const std::string& folder);
+	static std::string getFileName(const std::string& filePath);
 };
 
 #endif 

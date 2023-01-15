@@ -1,20 +1,8 @@
 #include "sourcefile.h"
-
-/*
-#include "sourcefile.h"
-#include "sourcefile.h"
-#include "sourcefile.h"
-#include "sourcefile.h"
-#include "sourcefile.h"
-#include "sourcefile.h"
-#include "sourcefile.h"
-#include "sourcefile.h"
-
-*/
+#include "../fileutils.h"
 
 #include <fstream>
 #include <iostream>
-
 #include <boost/algorithm/string.hpp>
 
 constexpr auto INCLUDE_DIRECTIVE = "#include" ;
@@ -24,14 +12,16 @@ constexpr auto MULTIROW_COMMENTARY_END = "*/";
 
 using namespace boost::algorithm;
 
-SourceFile::SourceFile(const std::string& path) {
+SourceFile::SourceFile(const std::string& path) :
+    m_path(path)
+{
 	
+    m_fileName = FileUtils::getFileName(path);
+
     std::string line;
     std::ifstream in(path);
 
-    if (in.is_open())
-    {   
-
+    if (in.is_open()) {   
         bool inCommentaryBlock = false;
 
         while (getline(in, line))
@@ -63,17 +53,6 @@ SourceFile::SourceFile(const std::string& path) {
     }
     in.close();
 
-    std::cout << "GLOBAL: " << std::endl;
-    for (auto& s : m_listGlobalIncludes) {
-        std::cout << s << std::endl;
-    }
-
-    std::cout << "\n" << std::endl;
-    std::cout << "LOCAL: " << std::endl;
-    for (auto& s : m_listLocalIncludes) {
-        std::cout << s << std::endl;
-    }
-
 }
 
 const std::list<std::string>& SourceFile::getGlobalIncludes() {
@@ -82,5 +61,13 @@ const std::list<std::string>& SourceFile::getGlobalIncludes() {
 
 const std::list<std::string>& SourceFile::getLocalIncludes() {
 	return m_listLocalIncludes;
+}
+
+const std::string& SourceFile::getFileName() {
+    return m_fileName;
+}
+
+const std::string& SourceFile::getFilePath() {
+    return m_path;
 }
 

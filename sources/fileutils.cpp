@@ -32,3 +32,7 @@ std::list<std::string> FileUtils::getListSourceFilesFromFolder(const std::string
 
 	return listFiles;
 }
+
+std::string FileUtils::getFileName(const std::string& filePath) {
+    return path(filePath).filename().string();
+}
